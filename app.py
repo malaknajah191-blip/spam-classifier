@@ -82,15 +82,33 @@ st.markdown("""
 # Load the trained model and vectorizer
 
 import os
-import subprocess
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
 
 @st.cache_resource
 def load_model():
-    if not os.path.exists('model.pkl') or not os.path.exists('vectorizer.pkl'):
-        with st.spinner("Training model for the first time, this takes about 10 seconds..."):
-            subprocess.run(['python', 'train_model.py'], check=True)
-    model = joblib.load('model.pkl')
-    vectorizer = joblib.load('vectorizer.pkl')
+    if os.path.exists('model.pkl') and os.path.exists('vectorizer.pkl'):
+        model = joblib.load('model.pkl')
+        vectorizer = joblib.load('vectorizer.pkl')
+        return model, vectorizer
+
+    with st.spinner("Training model for the first time, this takes a few seconds..."):
+        data = pd.read_csv('data/spam.csv', encoding='latin-1')
+        data = data.rename(columns={'Category': 'label', 'Message': 'message'})
+        data = data.drop_duplicates()
+        data['label_num'] = data['label'].map({'ham': 0, 'spam': 1})
+        data['clean_message'] = data['message'].apply(clean_text)
+
+        vectorizer = TfidfVectorizer(stop_words='english', max_features=3000)
+        X_vec = vectorizer.fit_transform(data['clean_message'])
+
+        model = MultinomialNB()
+        model.fit(X_vec, data['label_num'])
+
+        joblib.dump(model, 'model.pkl')
+        joblib.dump(vectorizer, 'vectorizer.pkl')
+
     return model, vectorizer
 
 model, vectorizer = load_model()
