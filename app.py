@@ -81,8 +81,14 @@ st.markdown("""
 
 # Load the trained model and vectorizer
 
+import os
+import subprocess
+
 @st.cache_resource
 def load_model():
+    if not os.path.exists('model.pkl') or not os.path.exists('vectorizer.pkl'):
+        with st.spinner("Training model for the first time, this takes about 10 seconds..."):
+            subprocess.run(['python', 'train_model.py'], check=True)
     model = joblib.load('model.pkl')
     vectorizer = joblib.load('vectorizer.pkl')
     return model, vectorizer
