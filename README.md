@@ -1,5 +1,5 @@
 # Spam Message Classifier
-[Try the live app]([https://spam-classifier-lc5xubzzypjpy8e9jcbqtw.streamlit.app](https://spam-classifier-lc5xubzzypjpy8e9jcbqtw.streamlit.app/))
+[Try the live app]([[https://spam-classifier-lc5xubzzypjpy8e9jcbqtw.streamlit.app](https://spam-classifier-lc5xubzzypjpy8e9jcbqtw.streamlit.app/)](https://spam-classifier-lc5xubzzypjpy8e9jcbqtw.streamlit.app/))
 
 A machine learning project that classifies SMS text messages as spam or not spam, using natural language processing and a Naive Bayes classifier. Includes an interactive Streamlit app for live predictions.
 
