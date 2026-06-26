@@ -1,6 +1,10 @@
 import streamlit as st
 import joblib
 import re
+import os
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
 
 st.set_page_config(page_title="Spam Classifier", page_icon="📩", layout="centered")
 
@@ -14,14 +18,6 @@ st.markdown("""
 }
 [data-testid="stHeader"] {
     background-color: rgba(255, 255, 255, 0);
-}
-.postcard {
-    background-color: #FFFDF8;
-    border: 1px solid #C68B59;
-    border-radius: 12px;
-    padding: 1.6rem 1.8rem;
-    margin-bottom: 1.2rem;
-    box-shadow: 0 2px 10px rgba(120, 80, 40, 0.08);
 }
 .stTextArea textarea {
     background-color: #FFFDF8 !important;
@@ -79,12 +75,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# Load the trained model and vectorizer
+def clean_text(text):
+    text = text.lower()
+    text = re.sub(r'\d+', ' ', text)
+    text = re.sub(r'[^\w\s]', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
 
-import os
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.naive_bayes import MultinomialNB
 
 @st.cache_resource
 def load_model():
@@ -111,17 +108,8 @@ def load_model():
 
     return model, vectorizer
 
+
 model, vectorizer = load_model()
-
-
-def clean_text(text):
-    text = text.lower()
-    text = re.sub(r'\d+', ' ', text)
-    text = re.sub(r'[^\w\s]', ' ', text)
-    text = re.sub(r'\s+', ' ', text).strip()
-    return text
-
-
 
 # App layout
 
