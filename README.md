@@ -9,7 +9,7 @@ This project takes a real-world dataset of SMS messages and builds a model that 
 
 ## Dataset
 
-[SMS Spam Collection](https://www.kaggle.com/code/mehakiftikhar/ml-for-email-spam-detection-nlp-classification) — 5,572 real SMS messages in English, labeled as `ham` (legitimate) or `spam`. Originally compiled for academic spam research and widely used in NLP courses and research.
+[SMS Spam Collection](https://www.kaggle.com/code/mehakiftikhar/ml-for-email-spam-detection-nlp-classification) 5,572 real SMS messages in English, labeled as `ham` (legitimate) or `spam`. Originally compiled for academic spam research and widely used in NLP courses and research.
 
 ## Features
 
