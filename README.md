@@ -36,30 +36,8 @@ Naive Bayes performed best, with perfect precision (it never wrongly flagged a r
 - Streamlit (web app)
 - joblib (model persistence)
 
-## How to run
 
-1. Clone this repository
-```bash
-   git clone https://github.com/malaknajah191-blip/spam-classifier.git
-   cd spam-classifier
-```
 
-2. Install dependencies
-```bash
-   pip install -r requirements.txt
-```
-
-3. Train the model (this creates `model.pkl` and `vectorizer.pkl`)
-```bash
-   python train_model.py
-```
-
-4. Launch the interactive app
-```bash
-   streamlit run app.py
-```
-
-5. Open the local URL shown in your terminal (usually `http://localhost:8501`), paste in any message, and click "Check message" to see the prediction.
 
 ## Project structure
 spam-classifier/
