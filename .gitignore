@@ -15,6 +15,3 @@ env/
 .DS_Store
 Thumbs.db
 
-# Model artifacts (large, regenerate by running train_model.py)
-model.pkl
-vectorizer.pkl
