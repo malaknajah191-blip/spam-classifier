@@ -1,6 +1,14 @@
-# Spam Message Classifier
 
-A machine learning project that classifies SMS text messages as spam or not spam, using natural language processing and a Naive Bayes classifier. Includes an interactive Streamlit app for live predictions.
+# SMS Spam Classifier
+
+A machine learning project that classifies SMS messages as spam or legitimate using natural language processing (NLP) and supervised learning.
+
+The project uses TF-IDF to represent text numerically, compares Multinomial Naive Bayes and Logistic Regression, and includes a Streamlit application for interactive predictions.
+
+## Interactive Demo
+
+The Streamlit app is available to run locally. See the instructions below to get started.
+
 
 ## Overview
 
@@ -8,7 +16,7 @@ This project takes a real-world dataset of SMS messages and builds a model that 
 
 ## Dataset
 
-[SMS Spam Collection](https://www.kaggle.com/code/mehakiftikhar/ml-for-email-spam-detection-nlp-classification) — 5,572 real SMS messages in English, labeled as `ham` (legitimate) or `spam`. Originally compiled for academic spam research and widely used in NLP courses and research.
+[SMS Spam Collection](https://www.kaggle.com/code/mehakiftikhar/ml-for-email-spam-detection-nlp-classification) 5,572 real SMS messages in English, labeled as `ham` (legitimate) or `spam`. Originally compiled for academic spam research and widely used in NLP courses and research.
 
 ## Features
 
@@ -35,30 +43,31 @@ Naive Bayes performed best, with perfect precision (it never wrongly flagged a r
 - Streamlit (web app)
 - joblib (model persistence)
 
-## How to run
 
-1. Clone this repository
+## Run Locally
+
+### 1. Clone the repository
+
 ```bash
-   git clone https://github.com/malaknajah191-blip/spam-classifier.git
-   cd spam-classifier
+git clone https://github.com/malaknajah191-blip/spam-classifier.git
+cd spam-classifier
 ```
 
-2. Install dependencies
+### 2. Install dependencies
+
 ```bash
-   pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-3. Train the model (this creates `model.pkl` and `vectorizer.pkl`)
+### 3. Launch the Streamlit app
+
 ```bash
-   python train_model.py
+streamlit run app.py
 ```
 
-4. Launch the interactive app
-```bash
-   streamlit run app.py
-```
+Streamlit will provide a local URL, usually `http://localhost:8501`.
 
-5. Open the local URL shown in your terminal (usually `http://localhost:8501`), paste in any message, and click "Check message" to see the prediction.
+
 
 ## Project structure
 spam-classifier/

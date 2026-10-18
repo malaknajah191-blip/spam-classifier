@@ -1,6 +1,10 @@
 import streamlit as st
 import joblib
 import re
+import os
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
 
 st.set_page_config(page_title="Spam Classifier", page_icon="📩", layout="centered")
 
@@ -14,14 +18,6 @@ st.markdown("""
 }
 [data-testid="stHeader"] {
     background-color: rgba(255, 255, 255, 0);
-}
-.postcard {
-    background-color: #FFFDF8;
-    border: 1px solid #C68B59;
-    border-radius: 12px;
-    padding: 1.6rem 1.8rem;
-    margin-bottom: 1.2rem;
-    box-shadow: 0 2px 10px rgba(120, 80, 40, 0.08);
 }
 .stTextArea textarea {
     background-color: #FFFDF8 !important;
@@ -79,17 +75,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# Load the trained model and vectorizer
-
-@st.cache_resource
-def load_model():
-    model = joblib.load('model.pkl')
-    vectorizer = joblib.load('vectorizer.pkl')
-    return model, vectorizer
-
-model, vectorizer = load_model()
-
-
 def clean_text(text):
     text = text.lower()
     text = re.sub(r'\d+', ' ', text)
@@ -98,6 +83,33 @@ def clean_text(text):
     return text
 
 
+@st.cache_resource
+def load_model():
+    if os.path.exists('model.pkl') and os.path.exists('vectorizer.pkl'):
+        model = joblib.load('model.pkl')
+        vectorizer = joblib.load('vectorizer.pkl')
+        return model, vectorizer
+
+    with st.spinner("Training model for the first time, this takes a few seconds..."):
+        data = pd.read_csv('data/spam.csv', encoding='latin-1')
+        data = data.rename(columns={'Category': 'label', 'Message': 'message'})
+        data = data.drop_duplicates()
+        data['label_num'] = data['label'].map({'ham': 0, 'spam': 1})
+        data['clean_message'] = data['message'].apply(clean_text)
+
+        vectorizer = TfidfVectorizer(stop_words='english', max_features=3000)
+        X_vec = vectorizer.fit_transform(data['clean_message'])
+
+        model = MultinomialNB()
+        model.fit(X_vec, data['label_num'])
+
+        joblib.dump(model, 'model.pkl')
+        joblib.dump(vectorizer, 'vectorizer.pkl')
+
+    return model, vectorizer
+
+
+model, vectorizer = load_model()
 
 # App layout
 
