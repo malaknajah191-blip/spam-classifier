@@ -7,7 +7,9 @@ The project uses TF-IDF to represent text numerically, compares Multinomial Naiv
 
 ## Interactive Demo
 
-The Streamlit app is available to run locally. See the instructions below to get started.
+🚀 **[Try the live app here!](https://spam-classifier-lc5xubzzypjpy8e9jcbqtw.streamlit.app)**
+
+The Streamlit app is also available to run locally. See the instructions below to get started.
 
 
 ## Overview
